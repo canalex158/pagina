@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donaciones</title>
+  <title>Dona en ApruebaSMR 💖</title>
   <style>
     body {
       margin: 0;
@@ -11,38 +11,62 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #111, #222);
-      font-family: 'Segoe UI', Arial, sans-serif;
+      flex-direction: column;
+      background: radial-gradient(circle at center, #00457c, #0070ba);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
     }
 
     .donate-button {
-      background-color: #0070ba;
-      color: white;
+      background-color: #ffc439;
+      color: #111;
       border: none;
       padding: 40px 80px;
       font-size: 3rem;
-      border-radius: 20px;
+      border-radius: 25px;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      font-weight: bold;
     }
 
     .donate-button:hover {
-      background-color: #005a9e;
+      background-color: #ffb347;
       transform: scale(1.05);
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 1rem;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
 
-  <form action="https://www.paypal.com/donate" method="post" target="_blank">
-    <!-- Cambia este correo por el tuyo -->
-    <input type="hidden" name="business" value="TU_CORREO@ejemplo.com">
-    <input type="hidden" name="currency_code" value="EUR">
-    <button type="submit" class="donate-button">💖 DONA AQUÍ 💖</button>
-  </form>
+  <h1>💖 ¡Apoya ApruebaSMR! 💖</h1>
+
+  <!-- 🔗 Enlace de donación -->
+  <a href="https://www.paypal.com/ncp/payment/7U4KBRD8A86YL"
+     class="donate-button" target="_blank">💸 DONAR 💸</a>
+
+  <footer>Gracias por apoyar apruebasmr.online 🙏</footer>
 
 </body>
 </html>
-
