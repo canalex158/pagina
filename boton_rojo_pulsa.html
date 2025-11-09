@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pulsa aquí — Estudia bro</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --btn-red:#e11d48;
+      --btn-red-dark:#b01433;
+      --glass: rgba(255,255,255,0.06);
+    }
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
+    body{
+      display:flex;align-items:center;justify-content:center;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.02), transparent),
+                  linear-gradient(180deg,#081226 0%, #061018 100%);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    }
+
+    /* Botón grande centrado */
+    .center-wrap{display:flex;align-items:center;justify-content:center;gap:1rem;width:100%;height:100%;}
+    .big-btn{
+      background: linear-gradient(180deg, var(--btn-red), var(--btn-red-dark));
+      border: none;
+      border-radius: 28px;
+      padding: clamp(24px, 5vw, 48px) clamp(48px, 10vw, 120px);
+      font-size: clamp(28px, 6vw, 80px);
+      font-weight:800;letter-spacing:1px;
+      color:white;cursor:pointer;box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 6px 18px rgba(225,29,72,0.18);
+      transform: translateZ(0);
+      transition: transform 160ms ease, box-shadow 160ms ease;
+      user-select:none;
+    }
+    .big-btn:active{transform: translateY(6px) scale(0.995);box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    .big-btn:focus{outline:4px solid rgba(255,255,255,0.08);outline-offset:6px}
+
+    /* Overlay con el mensaje enorme */
+    .overlay{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;
+      transition:opacity 300ms ease, backdrop-filter 300ms ease;opacity:0;backdrop-filter: blur(0px);
+    }
+    .overlay.show{opacity:1;pointer-events:auto;backdrop-filter: blur(6px)}
+    .message-box{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:24px;padding:1.5rem 2rem;text-align:center;max-width:95%;
+      box-shadow: 0 30px 70px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+      transform: translateY(20px) scale(0.98);transition: transform 300ms cubic-bezier(.2,.9,.3,1), opacity 300ms;
+      opacity:0;
+    }
+    .overlay.show .message-box{transform: translateY(0) scale(1);opacity:1}
+    .message-text{
+      font-size: clamp(32px, 10vw, 160px);line-height:0.9;font-weight:900;
+      margin:0;padding:0;text-shadow: 0 6px 30px rgba(0,0,0,0.7);
+      -webkit-text-stroke: 2px rgba(0,0,0,0.15);
+    }
+
+    .hint{font-size:clamp(12px,2.2vw,18px);opacity:0.8;margin-top:0.6rem}
+
+    /* Pequeña X para cerrar en móviles */
+    .close-x{position:absolute;top:18px;right:18px;font-size:24px;background:var(--glass);padding:8px;border-radius:999px;cursor:pointer}
+
+    @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="center-wrap">
+    <button id="bigBtn" class="big-btn" aria-haspopup="dialog" aria-controls="mensaje" aria-label="Pulsa aquí">pulsa aquí</button>
+  </div>
+
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="mensaje" hidden>
+    <div class="message-box" id="mensaje">
+      <div class="close-x" id="closeBtn" role="button" aria-label="Cerrar">✕</div>
+      <p class="message-text">estudia bro🙏🙏🙏🙏</p>
+      <p class="hint">Pulsa fuera o en la X para cerrar</p>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('bigBtn');
+      const overlay = document.getElementById('overlay');
+      const close = document.getElementById('closeBtn');
+
+      function show(){
+        overlay.hidden = false; // for accessibility
+        requestAnimationFrame(()=> overlay.classList.add('show'));
+        // set focus to overlay for keyboard users
+        overlay.querySelector('.close-x').focus();
+      }
+      function hide(){
+        overlay.classList.remove('show');
+        overlay.addEventListener('transitionend', onHideEnd, {once:true});
+        function onHideEnd(){ overlay.hidden = true; }
+        btn.focus();
+      }
+
+      btn.addEventListener('click', show);
+      close.addEventListener('click', hide);
+
+      // click outside the message-box closes it
+      overlay.addEventListener('click', (e)=>{
+        if(!e.target.closest('.message-box')) hide();
+      });
+
+      // keyboard accessibility: Esc to close
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape' && overlay.classList.contains('show')) hide();
+      });
+
+      // allow Enter/Space on the big button
+      btn.addEventListener('keyup', (e)=>{ if(e.key === 'Enter' || e.key === ' ') show(); });
+    })();
+  </script>
+</body>
+</html>
