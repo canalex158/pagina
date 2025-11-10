@@ -1,189 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora + Hora + Donar + Juego</title>
-<style>
-  body {
-    background: #0f172a;
-    color: #f8fafc;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    padding: 20px;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Donar — ApruebasMR</title>
+  <meta name="description" content="Página elegante blanco y negro con un botón para donar." />
 
-  h1, h2 {
-    margin-bottom: 10px;
-  }
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  #hora {
-    font-size: 1.5em;
-    margin-bottom: 30px;
-    color: #38bdf8;
-  }
+  <style>
+    :root{
+      --bg: #ffffff;
+      --fg: #0b0b0b;
+      --muted: #6b6b6b;
+      --accent: #000000; /* B&W accent */
+      --radius: 18px;
+      --max-width: 920px;
+    }
 
-  /* CALCULADORA */
-  .calculadora {
-    display: inline-block;
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    margin-bottom: 40px;
-  }
+    /* Reset minimal */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: var(--fg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      line-height:1.45;
+    }
 
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2em;
-    text-align: right;
-    border: none;
-    border-radius: 10px;
-    margin-bottom: 10px;
-  }
+    .card{
+      width:100%;
+      max-width:var(--max-width);
+      background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,1) 100%);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(10,10,10,0.06);
+      padding:48px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:36px;
+      align-items:center;
+    }
 
-  .botones {
-    display: grid;
-    grid-template-columns: repeat(5, 60px);
-    gap: 10px;
-    justify-content: center;
-  }
+    /* Mobile stack */
+    @media (max-width:880px){
+      .card{grid-template-columns:1fr; padding:28px; gap:20px}
+    }
 
-  button {
-    background: #334155;
-    color: white;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
+    .meta{
+      padding-right:8px;
+    }
 
-  button:hover {
-    background: #38bdf8;
-    color: black;
-  }
+    h1{
+      font-size: clamp(22px, 3.6vw, 34px);
+      letter-spacing: -0.02em;
+      font-weight:700;
+      margin-bottom:10px;
+      color:var(--fg);
+    }
 
-  /* BOTÓN DONAR */
-  .donar {
-    display: block;
-    margin: 40px auto;
-    background: #dc2626;
-    color: white;
-    font-size: 1.5em;
-    font-weight: bold;
-    padding: 15px 40px;
-    border-radius: 15px;
-    text-decoration: none;
-    transition: background 0.3s;
-    width: fit-content;
-  }
+    p.lead{
+      color:var(--muted);
+      margin-bottom:22px;
+      font-weight:400;
+    }
 
-  .donar:hover {
-    background: #f87171;
-  }
+    ul.features{
+      list-style:none;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    ul.features li{
+      background:transparent;
+      border:1px solid rgba(10,10,10,0.06);
+      padding:8px 12px;
+      border-radius:12px;
+      font-size:13px;
+      color:var(--muted);
+    }
 
-  /* JUEGO DE MECANOGRAFÍA */
-  .juego {
-    background: #1e293b;
-    border-radius: 20px;
-    padding: 20px;
-    width: 90%;
-    max-width: 500px;
-    margin: 0 auto;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  }
+    /* Donate column */
+    .donate{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px;
+    }
 
-  #palabra {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #38bdf8;
-  }
+    .donate-card{
+      width:100%;
+      max-width:380px;
+      text-align:center;
+      padding:34px;
+      border-radius:16px;
+      border: 1px solid rgba(10,10,10,0.04);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,250,250,0.85));
+      box-shadow: 0 8px 20px rgba(10,10,10,0.04);
+    }
 
-  #entrada {
-    padding: 10px;
-    width: 80%;
-    font-size: 1.2em;
-    border-radius: 10px;
-    border: none;
-    text-align: center;
-  }
+    /* Big button */
+    .btn-donate{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      width:100%;
+      padding:22px 20px;
+      font-size:20px;
+      font-weight:700;
+      border-radius:14px;
+      text-decoration:none;
+      background:var(--fg);
+      color:var(--bg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms;
+      border: 0;
+      cursor:pointer;
+    }
 
-  #resultado {
-    margin-top: 10px;
-    font-weight: bold;
-  }
+    .btn-donate:hover,
+    .btn-donate:focus{
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.14);
+      outline: none;
+    }
 
-  #puntuacion {
-    margin-top: 15px;
-    color: #a3e635;
-    font-size: 1.2em;
-  }
-</style>
+    .btn-donate:active{
+      transform: translateY(-1px) scale(.998);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .small{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:14px;
+    }
+
+    .foot{
+      margin-top:18px;
+      font-size:13px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:var(--fg);
+    }
+
+    .logo .mark{
+      width:40px;height:40px;border-radius:10px;
+      display:inline-grid;place-items:center;
+      background:linear-gradient(180deg, #000000, #222222);
+      color:white;font-weight:700;font-size:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    /* Accessibility focus visible */
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid rgba(0,0,0,0.12);
+      outline-offset: 4px;
+    }
+  </style>
 </head>
 <body>
-  <h1>🧮 Calculadora Científica</h1>
-  <div id="hora">Hora actual en España: cargando...</div>
+  <main class="card" role="main" aria-labelledby="pageTitle">
+    <section class="meta" aria-label="Información">
+      <a href="#" class="logo" aria-label="Ir al inicio" onclick="return false;">
+        <span class="mark">AM</span>
+        <div>
+          <div style="font-weight:700">ApruebasMR</div>
+          <div style="font-size:13px;color:var(--muted)">Diseño B&W · Limpio y minimal</div>
+        </div>
+      </a>
 
-  <div class="calculadora">
-    <input type="text" id="pantalla" readonly>
-    <div class="botones">
-      <button onclick="limpiar()">C</button>
-      <button onclick="borrar()">⌫</button>
-      <button onclick="agregar('(')">(</button>
-      <button onclick="agregar(')')">)</button>
-      <button onclick="agregar('/')">÷</button>
+      <h1 id="pageTitle">Apoya el proyecto</h1>
+      <p class="lead">Si aprecias el trabajo, una pequeña donación mantiene el hosting y mejoras constantes. Cualquier aporte suma.</p>
 
-      <button onclick="agregar('7')">7</button>
-      <button onclick="agregar('8')">8</button>
-      <button onclick="agregar('9')">9</button>
-      <button onclick="agregar('*')">×</button>
-      <button onclick="agregar('Math.pow(')">xʸ</button>
+      <ul class="features" aria-hidden="true">
+        <li>Diseño minimal</li>
+        <li>Accesible</li>
+        <li>Responsivo</li>
+      </ul>
 
-      <button onclick="agregar('4')">4</button>
-      <button onclick="agregar('5')">5</button>
-      <button onclick="agregar('6')">6</button>
-      <button onclick="agregar('-')">−</button>
-      <button onclick="agregar('Math.sqrt(')">√</button>
+      <div class="foot" aria-hidden="true">
+        <span>© <span id="year"></span> ApruebasMR</span>
+        <span>Hecho con ♥</span>
+      </div>
+    </section>
 
-      <button onclick="agregar('1')">1</button>
-      <button onclick="agregar('2')">2</button>
-      <button onclick="agregar('3')">3</button>
-      <button onclick="agregar('+')">+</button>
-      <button onclick="agregar('Math.PI')">π</button>
+    <aside class="donate" aria-label="Donación">
+      <div class="donate-card" role="region" aria-labelledby="donateTitle">
+        <h2 id="donateTitle" style="margin-bottom:8px;font-size:18px;font-weight:700">Donar</h2>
+        <p style="margin-bottom:18px;color:var(--muted)">Haz tu donación de forma segura vía PayPal.</p>
 
-      <button onclick="agregar('0')">0</button>
-      <button onclick="agregar('.')">.</button>
-      <button onclick="agregar('Math.sin(')">sin</button>
-      <button onclick="agregar('Math.cos(')">cos</button>
-      <button onclick="agregar('Math.tan(')">tan</button>
+        <!-- Botón como enlace (abre en pestaña nueva) -->
+        <a
+          class="btn-donate"
+          href="https://www.paypal.com/ncp/payment/L5LZLG5CSB6EA"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Donar a través de PayPal (se abre en una nueva pestaña)">
+          <span style="display:inline-block;transform:translateY(-1px)">💸</span>
+          Donar
+        </a>
 
-      <button style="grid-column: span 5; background: #38bdf8; color: black;" onclick="calcular()">=</button>
-    </div>
-  </div>
-
-  <a href="https://www.paypal.com/ncp/payment/L5LZLG5CSB6EA" target="_blank" class="donar">❤️ Donar</a>
-
-  <h2>⌨️ Juego de Mecanografía</h2>
-  <div class="juego">
-    <div id="palabra">Preparado...</div>
-    <input type="text" id="entrada" placeholder="Escribe aquí" disabled>
-    <div id="resultado"></div>
-    <div id="puntuacion">Puntuación: 0</div>
-  </div>
+        <div class="small" role="note">
+          Se abrirá PayPal en una pestaña nueva. No compartas datos sensibles aquí.
+        </div>
+      </div>
+    </aside>
+  </main>
 
   <script>
-    // Hora en vivo de España
-    function actualizarHora() {
-      const opciones = { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", second: "2-digit" };
-      const horaActual = new Intl.DateTimeFormat('es-ES', opciones).format(new Date());
-      document.getElementById('hora').textContent = `Hora actual en España: ${horaActual}`;
-    }
-    setInterval(actualizarHora, 1000);
-    actualizarHora();
-
-    // Calculadora
-    const pantalla = document.getElementById('pantalla');
-    function agregar(valor)
+    // Inserta el año actual dinámicamente
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
