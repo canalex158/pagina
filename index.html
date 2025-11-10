@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora Científica + Hora + Donar</title>
+<title>Calculadora + Hora + Donar + Juego</title>
 <style>
   body {
     background: #0f172a;
@@ -13,9 +13,8 @@
     padding: 20px;
   }
 
-  h1 {
+  h1, h2 {
     margin-bottom: 10px;
-    font-size: 2em;
   }
 
   #hora {
@@ -24,12 +23,14 @@
     color: #38bdf8;
   }
 
+  /* CALCULADORA */
   .calculadora {
     display: inline-block;
     background: #1e293b;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    margin-bottom: 40px;
   }
 
   input[type="text"] {
@@ -65,9 +66,10 @@
     color: black;
   }
 
+  /* BOTÓN DONAR */
   .donar {
     display: block;
-    margin: 40px auto 0;
+    margin: 40px auto;
     background: #dc2626;
     color: white;
     font-size: 1.5em;
@@ -76,10 +78,48 @@
     border-radius: 15px;
     text-decoration: none;
     transition: background 0.3s;
+    width: fit-content;
   }
 
   .donar:hover {
     background: #f87171;
+  }
+
+  /* JUEGO DE MECANOGRAFÍA */
+  .juego {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  }
+
+  #palabra {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #38bdf8;
+  }
+
+  #entrada {
+    padding: 10px;
+    width: 80%;
+    font-size: 1.2em;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+  }
+
+  #resultado {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  #puntuacion {
+    margin-top: 15px;
+    color: #a3e635;
+    font-size: 1.2em;
   }
 </style>
 </head>
@@ -126,8 +166,16 @@
 
   <a href="https://www.paypal.com/ncp/payment/L5LZLG5CSB6EA" target="_blank" class="donar">❤️ Donar</a>
 
+  <h2>⌨️ Juego de Mecanografía</h2>
+  <div class="juego">
+    <div id="palabra">Preparado...</div>
+    <input type="text" id="entrada" placeholder="Escribe aquí" disabled>
+    <div id="resultado"></div>
+    <div id="puntuacion">Puntuación: 0</div>
+  </div>
+
   <script>
-    // Función hora en vivo (España)
+    // Hora en vivo de España
     function actualizarHora() {
       const opciones = { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", second: "2-digit" };
       const horaActual = new Intl.DateTimeFormat('es-ES', opciones).format(new Date());
@@ -136,18 +184,6 @@
     setInterval(actualizarHora, 1000);
     actualizarHora();
 
-    // Funciones de la calculadora
+    // Calculadora
     const pantalla = document.getElementById('pantalla');
-    function agregar(valor) { pantalla.value += valor; }
-    function limpiar() { pantalla.value = ''; }
-    function borrar() { pantalla.value = pantalla.value.slice(0, -1); }
-    function calcular() {
-      try {
-        pantalla.value = eval(pantalla.value);
-      } catch {
-        pantalla.value = 'Error';
-      }
-    }
-  </script>
-</body>
-</html>
+    function agregar(valor)
