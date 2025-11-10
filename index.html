@@ -1,71 +1,153 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dona en ApruebaSMR 💖</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: radial-gradient(circle at center, #00457c, #0070ba);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Científica + Hora + Donar</title>
+<style>
+  body {
+    background: #0f172a;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 40px;
-      text-shadow: 0 0 20px rgba(255,255,255,0.3);
-      animation: pulse 2s infinite;
-    }
+  h1 {
+    margin-bottom: 10px;
+    font-size: 2em;
+  }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.9; }
-    }
+  #hora {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: #38bdf8;
+  }
 
-    .donate-button {
-      background-color: #ffc439;
-      color: #111;
-      border: none;
-      padding: 40px 80px;
-      font-size: 3rem;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      text-decoration: none;
-      font-weight: bold;
-    }
+  .calculadora {
+    display: inline-block;
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  }
 
-    .donate-button:hover {
-      background-color: #ffb347;
-      transform: scale(1.05);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-    }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    text-align: right;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
 
-    footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 1rem;
-      opacity: 0.8;
-    }
-  </style>
+  .botones {
+    display: grid;
+    grid-template-columns: repeat(5, 60px);
+    gap: 10px;
+    justify-content: center;
+  }
+
+  button {
+    background: #334155;
+    color: white;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  button:hover {
+    background: #38bdf8;
+    color: black;
+  }
+
+  .donar {
+    display: block;
+    margin: 40px auto 0;
+    background: #dc2626;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 15px 40px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .donar:hover {
+    background: #f87171;
+  }
+</style>
 </head>
 <body>
+  <h1>🧮 Calculadora Científica</h1>
+  <div id="hora">Hora actual en España: cargando...</div>
 
-  <h1>💖 ¡Apoya ApruebaSMR! 💖</h1>
+  <div class="calculadora">
+    <input type="text" id="pantalla" readonly>
+    <div class="botones">
+      <button onclick="limpiar()">C</button>
+      <button onclick="borrar()">⌫</button>
+      <button onclick="agregar('(')">(</button>
+      <button onclick="agregar(')')">)</button>
+      <button onclick="agregar('/')">÷</button>
 
-  <!-- 🔗 Enlace de donación -->
-  <a href="https://www.paypal.com/ncp/payment/VLPKPZNEZGAKE">💸 DONAR 💸</a>
+      <button onclick="agregar('7')">7</button>
+      <button onclick="agregar('8')">8</button>
+      <button onclick="agregar('9')">9</button>
+      <button onclick="agregar('*')">×</button>
+      <button onclick="agregar('Math.pow(')">xʸ</button>
 
-  <footer>Gracias por apoyar apruebasmr.online 🙏</footer>
+      <button onclick="agregar('4')">4</button>
+      <button onclick="agregar('5')">5</button>
+      <button onclick="agregar('6')">6</button>
+      <button onclick="agregar('-')">−</button>
+      <button onclick="agregar('Math.sqrt(')">√</button>
 
+      <button onclick="agregar('1')">1</button>
+      <button onclick="agregar('2')">2</button>
+      <button onclick="agregar('3')">3</button>
+      <button onclick="agregar('+')">+</button>
+      <button onclick="agregar('Math.PI')">π</button>
+
+      <button onclick="agregar('0')">0</button>
+      <button onclick="agregar('.')">.</button>
+      <button onclick="agregar('Math.sin(')">sin</button>
+      <button onclick="agregar('Math.cos(')">cos</button>
+      <button onclick="agregar('Math.tan(')">tan</button>
+
+      <button style="grid-column: span 5; background: #38bdf8; color: black;" onclick="calcular()">=</button>
+    </div>
+  </div>
+
+  <a href="https://www.paypal.com/ncp/payment/L5LZLG5CSB6EA" target="_blank" class="donar">❤️ Donar</a>
+
+  <script>
+    // Función hora en vivo (España)
+    function actualizarHora() {
+      const opciones = { timeZone: "Europe/Madrid", hour: "2-digit", minute: "2-digit", second: "2-digit" };
+      const horaActual = new Intl.DateTimeFormat('es-ES', opciones).format(new Date());
+      document.getElementById('hora').textContent = `Hora actual en España: ${horaActual}`;
+    }
+    setInterval(actualizarHora, 1000);
+    actualizarHora();
+
+    // Funciones de la calculadora
+    const pantalla = document.getElementById('pantalla');
+    function agregar(valor) { pantalla.value += valor; }
+    function limpiar() { pantalla.value = ''; }
+    function borrar() { pantalla.value = pantalla.value.slice(0, -1); }
+    function calcular() {
+      try {
+        pantalla.value = eval(pantalla.value);
+      } catch {
+        pantalla.value = 'Error';
+      }
+    }
+  </script>
 </body>
 </html>
